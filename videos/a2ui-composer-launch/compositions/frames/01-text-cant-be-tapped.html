@@ -7,7 +7,7 @@
 
     /* 01-text-cant-be-tapped — 1920x1080. Tokens from frame.md (Composer Dark).
        canvas #07080B · ink #EDF1F8 · ink-faint #828A99 · stream #5B8CFF · live #34E2C0
-       Left rail x=730 (38%). Reply at `lead` (2.08cqw = 40px / lh 58px). */
+       Reply + verdict are centred on the frame. Reply at `lead` (40px / lh 58px). */
 
     #root {
       position: absolute; inset: 0; width: 1920px; height: 1080px;
@@ -39,14 +39,14 @@
     /* the agent's reply — the caret lives INSIDE these hosts, so it rides the
        end of the typed text with no layout measurement anywhere. */
     .f01tct-host {
-      position: absolute; left: 730px; display: inline-block; white-space: pre;
+      position: absolute; left: 0; right: 0; display: block; text-align: center; white-space: pre;
       font-size: 40px; font-weight: 400; line-height: 58px; letter-spacing: 0;
       color: #EDF1F8;
     }
-    .f01tct-host-1 { top: 547px; }
-    .f01tct-host-2 { top: 605px; }
+    .f01tct-host-1 { top: 447px; }
+    .f01tct-host-2 { top: 505px; }
     /* the empty next line the reply never gets to: the caret's rest row */
-    .f01tct-host-3 { top: 669.6px; height: 44px; line-height: 44px; font-size: 0; }
+    .f01tct-host-3 { top: 569.6px; height: 44px; line-height: 44px; font-size: 0; }
 
     /* stream caret — 2px x 1.1em bar. The only element allowed to blink. */
     .f01tct-caret {
@@ -62,19 +62,79 @@
 
     /* verdict — kicker-index form: mono, uppercase, tracked, live square prefix */
     .f01tct-verdict {
-      position: absolute; left: 730px; top: 750px;
-      display: flex; align-items: baseline;
+      position: absolute; left: 0; right: 0; top: 650px;
+      display: flex; align-items: baseline; justify-content: center;
       font-family: 'JetBrains Mono', monospace; font-size: 38.4px; font-weight: 500;
       letter-spacing: 0.26em; line-height: 46px; text-transform: uppercase;
       color: #EDF1F8; white-space: pre;
     }
     .f01tct-mark {
-      position: relative; display: inline-block; width: 6px; height: 6px;
-      margin-right: 17px; background: #34E2C0; flex: none;
+      position: relative; display: inline-block; width: 7px; height: 7px;
+      margin-right: 30px; background: #34E2C0; flex: none; align-self: center;
     }
     .f01tct-word { display: inline-block; }
     .f01tct-word-in { display: inline-block; transform-origin: 0% 60%; text-shadow: 0 0 0 rgba(52,226,192,0); }
-  </style>
+  
+  
+  
+  
+  
+  
+
+
+
+    /* ── injected by scripts/chassis.mjs — do not hand-edit ───────────────── */
+    /* atmosphere: rides the ground, so it is always BELOW content */
+    .f01tct-ground::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        radial-gradient(ellipse 44% 38% at 50% 47%, rgba(237,241,248,0.030), rgba(237,241,248,0) 72%),
+        repeating-linear-gradient(to right, rgba(237,241,248,0.055) 0 1px, transparent 1px 240px),
+        repeating-linear-gradient(to bottom, rgba(237,241,248,0.055) 0 1px, transparent 1px 240px);
+      -webkit-mask-image: radial-gradient(ellipse 76% 68% at 50% 50%, #000 28%, transparent 100%);
+      mask-image: radial-gradient(ellipse 76% 68% at 50% 50%, #000 28%, transparent 100%);
+    }
+    .f01tct-ground { box-shadow: inset 0 0 300px 90px rgba(0,0,0,0.55); }
+
+    /* chassis: corner ticks + top rail + the vertical index rail */
+    #f01c-chassis { position: absolute; inset: 0; pointer-events: none; }
+    #f01c-chassis .tick { position: absolute; width: 30px; height: 30px; }
+    #f01c-chassis .tick::before,
+    #f01c-chassis .tick::after {
+      content: ""; position: absolute; background: rgba(237,241,248,0.16);
+    }
+    #f01c-chassis .tick::before { width: 30px; height: 1px; }
+    #f01c-chassis .tick::after { width: 1px; height: 30px; }
+    #f01c-chassis .tl { left: 64px; top: 64px; }
+    #f01c-chassis .tr { right: 64px; top: 64px; }
+    #f01c-chassis .bl { left: 64px; bottom: 64px; }
+    #f01c-chassis .br { right: 64px; bottom: 64px; }
+    #f01c-chassis .tl::before, #f01c-chassis .tl::after { left: 0; top: 0; }
+    #f01c-chassis .tr::before { right: 0; top: 0; }
+    #f01c-chassis .tr::after { right: 0; top: 0; }
+    #f01c-chassis .bl::before { left: 0; bottom: 0; }
+    #f01c-chassis .bl::after { left: 0; bottom: 0; }
+    #f01c-chassis .br::before { right: 0; bottom: 0; }
+    #f01c-chassis .br::after { right: 0; bottom: 0; }
+
+    #f01c-toprail {
+      position: absolute; left: 118px; right: 118px; top: 62px; height: 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 500;
+      letter-spacing: 0.16em; line-height: 20px; color: #828A99;
+    }
+    #f01c-toprail .dot {
+      display: inline-block; width: 5px; height: 5px; background: #34E2C0;
+      margin-right: 14px; vertical-align: 3px;
+    }
+    #f01c-vrail {
+      position: absolute; left: 34px; top: 50%; transform: translateY(-50%) rotate(180deg);
+      writing-mode: vertical-rl; text-orientation: mixed;
+      font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 400;
+      letter-spacing: 0.30em; color: #828A99; white-space: nowrap;
+    }
+    /* ── end chassis ─────────────────────────────────────────────────────── */
+</style>
 
   <div id="root" data-composition-id="01-text-cant-be-tapped" data-start="0" data-duration="8.5" data-width="1920" data-height="1080">
     <!-- the film's floor: identical in every frame, full duration, never animated -->
@@ -109,6 +169,12 @@
         >
       </div>
     </div>
+    <!-- injected by scripts/chassis.mjs — the film's editorial chassis -->
+    <div id="f01c-chassis" class="clip" data-start="0" data-duration="8.5" data-track-index="3" data-layout-allow-overlap>
+      <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+      <div id="f01c-toprail"><span><i class="dot"></i>Fig. 01 — Agent reply, plain text</span><span>A2UI.ORG/COMPOSER</span></div>
+      <div id="f01c-vrail">A2UI · a streaming protocol for agent-driven user interfaces</div>
+    </div>
   </div>
 
   <script src="assets/vendor/gsap.min.js"></script>
@@ -129,7 +195,7 @@
       var T2_IN = 2.6, T2_OUT = 4.85;   // scene 2 — line 2 types on
       var T_NEWLINE = 4.95;             // caret drops to the empty next line
       var T_VERDICT = 5.0;              // scene 3 — desaturate + verdict
-      var TRANSIT_DX = 230;             // 730 (rail) -> 960 (50% of canvas)
+      var TRANSIT_DX = 0;               // the empty host is centred, so x=960 is the layout
 
       /* discrete-text-sequence: sparse {t,text} states. Cadence is derived per
          character (spaces breathe, punctuation breathes more, a fixed

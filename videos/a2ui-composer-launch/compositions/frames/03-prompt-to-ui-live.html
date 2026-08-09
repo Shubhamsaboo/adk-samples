@@ -128,6 +128,66 @@
 #p3-cursor{position:absolute;left:781px;top:622px;width:0;height:0;pointer-events:none;
   transform-origin:0% 0%;will-change:transform;}
 #p3-cursor svg{display:block;margin-left:-11.25px;margin-top:-4.5px;}
+
+  
+  
+  
+  
+  
+
+
+
+    /* ── injected by scripts/chassis.mjs — do not hand-edit ───────────────── */
+    /* atmosphere: rides the ground, so it is always BELOW content */
+    #p3-ground::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        radial-gradient(ellipse 44% 38% at 50% 47%, rgba(237,241,248,0.030), rgba(237,241,248,0) 72%),
+        repeating-linear-gradient(to right, rgba(237,241,248,0.055) 0 1px, transparent 1px 240px),
+        repeating-linear-gradient(to bottom, rgba(237,241,248,0.055) 0 1px, transparent 1px 240px);
+      -webkit-mask-image: radial-gradient(ellipse 76% 68% at 50% 50%, #000 28%, transparent 100%);
+      mask-image: radial-gradient(ellipse 76% 68% at 50% 50%, #000 28%, transparent 100%);
+    }
+    #p3-ground { box-shadow: inset 0 0 300px 90px rgba(0,0,0,0.55); }
+
+    /* chassis: corner ticks + top rail + the vertical index rail */
+    #f03c-chassis { position: absolute; inset: 0; pointer-events: none; }
+    #f03c-chassis .tick { position: absolute; width: 30px; height: 30px; }
+    #f03c-chassis .tick::before,
+    #f03c-chassis .tick::after {
+      content: ""; position: absolute; background: rgba(237,241,248,0.16);
+    }
+    #f03c-chassis .tick::before { width: 30px; height: 1px; }
+    #f03c-chassis .tick::after { width: 1px; height: 30px; }
+    #f03c-chassis .tl { left: 64px; top: 64px; }
+    #f03c-chassis .tr { right: 64px; top: 64px; }
+    #f03c-chassis .bl { left: 64px; bottom: 64px; }
+    #f03c-chassis .br { right: 64px; bottom: 64px; }
+    #f03c-chassis .tl::before, #f03c-chassis .tl::after { left: 0; top: 0; }
+    #f03c-chassis .tr::before { right: 0; top: 0; }
+    #f03c-chassis .tr::after { right: 0; top: 0; }
+    #f03c-chassis .bl::before { left: 0; bottom: 0; }
+    #f03c-chassis .bl::after { left: 0; bottom: 0; }
+    #f03c-chassis .br::before { right: 0; bottom: 0; }
+    #f03c-chassis .br::after { right: 0; bottom: 0; }
+
+    #f03c-toprail {
+      position: absolute; left: 118px; right: 118px; top: 62px; height: 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 500;
+      letter-spacing: 0.16em; line-height: 20px; color: #828A99;
+    }
+    #f03c-toprail .dot {
+      display: inline-block; width: 5px; height: 5px; background: #34E2C0;
+      margin-right: 14px; vertical-align: 3px;
+    }
+    #f03c-vrail {
+      position: absolute; left: 34px; top: 50%; transform: translateY(-50%) rotate(180deg);
+      writing-mode: vertical-rl; text-orientation: mixed;
+      font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 400;
+      letter-spacing: 0.30em; color: #828A99; white-space: nowrap;
+    }
+    /* ── end chassis ─────────────────────────────────────────────────────── */
 </style>
 
 <div id="root" data-composition-id="03-prompt-to-ui-live" data-start="0" data-duration="14.6" data-width="1920" data-height="1080">
@@ -214,8 +274,13 @@
       </svg>
     </div>
   </div>
-
-</div>
+    <!-- injected by scripts/chassis.mjs — the film's editorial chassis -->
+    <div id="f03c-chassis" class="clip" data-start="0" data-duration="14.6" data-track-index="3" data-layout-allow-overlap>
+      <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+      <div id="f03c-toprail"><span><i class="dot"></i>Fig. 03 — Surface: flight-status</span><span>A2UI.ORG/COMPOSER</span></div>
+      <div id="f03c-vrail">A2UI · a streaming protocol for agent-driven user interfaces</div>
+    </div>
+  </div>
 
 <script src="assets/vendor/gsap.min.js"></script>
 <script>

@@ -103,7 +103,67 @@
     .f05-verdict{position:absolute;left:960px;top:567px;width:880px;}
     .f05-v{font-size:88px;font-weight:600;line-height:1.06;letter-spacing:-0.028em;color:#EDF1F8;}
     .f05-v.live{color:#34E2C0;}
-  </style>
+  
+  
+  
+  
+  
+  
+
+
+
+    /* ── injected by scripts/chassis.mjs — do not hand-edit ───────────────── */
+    /* atmosphere: rides the ground, so it is always BELOW content */
+    .f05-ground::after {
+      content: ""; position: absolute; inset: 0; pointer-events: none;
+      background-image:
+        radial-gradient(ellipse 44% 38% at 50% 47%, rgba(237,241,248,0.030), rgba(237,241,248,0) 72%),
+        repeating-linear-gradient(to right, rgba(237,241,248,0.055) 0 1px, transparent 1px 240px),
+        repeating-linear-gradient(to bottom, rgba(237,241,248,0.055) 0 1px, transparent 1px 240px);
+      -webkit-mask-image: radial-gradient(ellipse 76% 68% at 50% 50%, #000 28%, transparent 100%);
+      mask-image: radial-gradient(ellipse 76% 68% at 50% 50%, #000 28%, transparent 100%);
+    }
+    .f05-ground { box-shadow: inset 0 0 300px 90px rgba(0,0,0,0.55); }
+
+    /* chassis: corner ticks + top rail + the vertical index rail */
+    #f05c-chassis { position: absolute; inset: 0; pointer-events: none; }
+    #f05c-chassis .tick { position: absolute; width: 30px; height: 30px; }
+    #f05c-chassis .tick::before,
+    #f05c-chassis .tick::after {
+      content: ""; position: absolute; background: rgba(237,241,248,0.16);
+    }
+    #f05c-chassis .tick::before { width: 30px; height: 1px; }
+    #f05c-chassis .tick::after { width: 1px; height: 30px; }
+    #f05c-chassis .tl { left: 64px; top: 64px; }
+    #f05c-chassis .tr { right: 64px; top: 64px; }
+    #f05c-chassis .bl { left: 64px; bottom: 64px; }
+    #f05c-chassis .br { right: 64px; bottom: 64px; }
+    #f05c-chassis .tl::before, #f05c-chassis .tl::after { left: 0; top: 0; }
+    #f05c-chassis .tr::before { right: 0; top: 0; }
+    #f05c-chassis .tr::after { right: 0; top: 0; }
+    #f05c-chassis .bl::before { left: 0; bottom: 0; }
+    #f05c-chassis .bl::after { left: 0; bottom: 0; }
+    #f05c-chassis .br::before { right: 0; bottom: 0; }
+    #f05c-chassis .br::after { right: 0; bottom: 0; }
+
+    #f05c-toprail {
+      position: absolute; left: 118px; right: 118px; top: 62px; height: 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 500;
+      letter-spacing: 0.16em; line-height: 20px; color: #828A99;
+    }
+    #f05c-toprail .dot {
+      display: inline-block; width: 5px; height: 5px; background: #34E2C0;
+      margin-right: 14px; vertical-align: 3px;
+    }
+    #f05c-vrail {
+      position: absolute; left: 34px; top: 50%; transform: translateY(-50%) rotate(180deg);
+      writing-mode: vertical-rl; text-orientation: mixed;
+      font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 400;
+      letter-spacing: 0.30em; color: #828A99; white-space: nowrap;
+    }
+    /* ── end chassis ─────────────────────────────────────────────────────── */
+</style>
 
   <div id="root" data-composition-id="05-one-payload-every-renderer" data-start="0" data-duration="10.4" data-width="1920" data-height="1080">
 
@@ -175,7 +235,12 @@
       <span>A2UI · AGENT-DRIVEN INTERFACES</span>
       <span>05 / 06</span>
     </div>
-
+    <!-- injected by scripts/chassis.mjs — the film's editorial chassis -->
+    <div id="f05c-chassis" class="clip" data-start="0" data-duration="10.4" data-track-index="3" data-layout-allow-overlap>
+      <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
+      <div id="f05c-toprail"><span><i class="dot"></i>Fig. 05 — Basic catalog, three renderers</span><span>A2UI.ORG/COMPOSER</span></div>
+      <div id="f05c-vrail">A2UI · a streaming protocol for agent-driven user interfaces</div>
+    </div>
   </div>
 
   <script>
