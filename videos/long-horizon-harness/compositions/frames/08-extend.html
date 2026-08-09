@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .ex-ground{ position:absolute; inset:0; background:#06080C; }
+        .ex-sky{
+          position:absolute; inset:0;
+          background:radial-gradient(88% 62% at 50% 44%, rgba(126,176,204,0.08) 0%, rgba(6,8,12,0) 70%);
+        }
+        .ex-kicker{
+          position:absolute; left:4.2cqw; top:4.2cqw;
+          font-family:"JetBrains Mono", monospace; font-size:28px; letter-spacing:0.16em;
+          text-transform:uppercase; color:rgba(233,238,246,0.52);
+        }
+        .ex-kicker i{ color:#5CE1F2; font-style:normal; margin-right:0.6em; }
+
+        .ex-card{
+          position:absolute; top:288px; width:500px; height:432px;
+          background:#0E1219; border:1px solid rgba(233,238,246,0.10); border-radius:12px;
+          box-shadow:0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45);
+          overflow:hidden;
+        }
+        .ex-bar{
+          height:52px; background:#141A23; border-bottom:1px solid rgba(233,238,246,0.09);
+          display:flex; align-items:center; justify-content:space-between; padding:0 20px;
+          font-family:"JetBrains Mono", monospace; font-size:21px; letter-spacing:0.12em;
+          color:rgba(233,238,246,0.70);
+        }
+        .ex-bar em{ font-style:normal; font-size:18px; letter-spacing:0.14em; color:rgba(233,238,246,0.56); }
+        .ex-body{ position:relative; padding:24px 22px; height:calc(100% - 52px); }
+        .ex-code{
+          font-family:"JetBrains Mono", monospace; font-size:21px; line-height:1.85;
+          color:rgba(233,238,246,0.60); white-space:pre;
+        }
+        .ex-code u{ text-decoration:none; color:#5DB8A6; }
+        .ex-pill{
+          position:absolute; left:22px; bottom:22px;
+          background:#161C26; border:1px solid rgba(233,238,246,0.16); border-radius:9999px;
+          padding:10px 20px;
+          font-family:"JetBrains Mono", monospace; font-size:20px; letter-spacing:0.08em;
+          color:rgba(233,238,246,0.80);
+        }
+        .ex-node{
+          position:absolute; width:150px; height:64px; border-radius:10px;
+          background:#161C26; border:1px solid rgba(233,238,246,0.14);
+          display:flex; align-items:center; justify-content:center;
+          font-family:"JetBrains Mono", monospace; font-size:19px; letter-spacing:0.10em;
+          color:rgba(233,238,246,0.74);
+        }
+        .ex-wire{ position:absolute; inset:0; }
+        .ex-part{
+          position:absolute; left:170px; bottom:34px;
+          font-family:"JetBrains Mono", monospace; font-size:18px; letter-spacing:0.08em;
+          color:rgba(233,238,246,0.56);
+          border:1px solid rgba(233,238,246,0.12); border-radius:8px; padding:8px 14px;
+          background:#161C26;
+        }
+        .ex-chat{
+          margin-bottom:14px; border:1px solid rgba(233,238,246,0.10); border-radius:10px;
+          background:#161C26; padding:14px 18px;
+          font-family:"JetBrains Mono", monospace; font-size:19px; letter-spacing:0.04em;
+          color:rgba(233,238,246,0.62);
+        }
+        .ex-chat i{ font-style:normal; color:rgba(233,238,246,0.50); display:block; font-size:17px; margin-top:6px; }
+      </style>
+
+      <div id="root" data-composition-id="08-extend" data-start="0" data-duration="11.4" data-width="1920" data-height="1080">
+        <div id="ex-ground" class="clip ex-ground" data-start="0" data-duration="11.4" data-track-index="0">
+          <div class="ex-sky"></div>
+        </div>
+
+        <div class="ex-kicker" id="ex-kicker"><i>&#10033;</i>EXTEND IT IN PLACE</div>
+
+        <!-- card 1 — a skill file dropped into the workspace -->
+        <div class="ex-card" id="ex-c1" style="left:150px;">
+          <div class="ex-bar"><span>SKILL.md</span><em id="ex-status">DRAFT</em></div>
+          <div class="ex-body">
+            <div class="ex-code" id="ex-code"></div>
+            <div class="ex-pill" id="ex-pill">/reload</div>
+          </div>
+        </div>
+
+        <!-- card 2 — A2A -->
+        <div class="ex-card" id="ex-c2" style="left:710px;">
+          <div class="ex-bar"><span>A2A</span><em>AGENT &#8594; AGENT</em></div>
+          <div class="ex-body">
+            <div class="ex-node" id="ex-n1" style="left:26px; top:56px;">any agent</div>
+            <div class="ex-node" id="ex-n2" style="right:26px; top:56px;">horizon</div>
+            <svg class="ex-wire" viewBox="0 0 500 380" preserveAspectRatio="none">
+              <line id="ex-w1" x1="176" y1="88" x2="298" y2="88" stroke="rgba(233,238,246,0.28)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+            </svg>
+            <div class="ex-part" id="ex-part">structured UI parts &#8592;</div>
+          </div>
+        </div>
+
+        <!-- card 3 — scheduled chats -->
+        <div class="ex-card" id="ex-c3" style="left:1270px;">
+          <div class="ex-bar"><span>SCHEDULED</span><em>REPLAYABLE</em></div>
+          <div class="ex-body">
+            <div class="ex-chat" id="ex-h1">weekly cost audit<i>fired &#183; mon 09:00</i></div>
+            <div class="ex-chat" id="ex-h2">release notes draft<i>fired &#183; fri 17:00</i></div>
+            <div class="ex-chat" id="ex-h3">inbox digest<i>queued &#183; tomorrow 08:00</i></div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "08-extend";
+
+          var kicker = document.getElementById('ex-kicker');
+          var c1 = document.getElementById('ex-c1');
+          var c2 = document.getElementById('ex-c2');
+          var c3 = document.getElementById('ex-c3');
+          var code = document.getElementById('ex-code');
+          var pill = document.getElementById('ex-pill');
+          var statusEl = document.getElementById('ex-status');
+          var n1 = document.getElementById('ex-n1');
+          var n2 = document.getElementById('ex-n2');
+          var wire = document.getElementById('ex-w1');
+          var part = document.getElementById('ex-part');
+          var chats = ['ex-h1', 'ex-h2', 'ex-h3'].map(function (i) { return document.getElementById(i); });
+
+          gsap.set([c1, c2, c3], { opacity: 0, y: 46, scale: 0.95, transformOrigin: "50% 60%" });
+          gsap.set(pill, { opacity: 0, scale: 0.9, transformOrigin: "0% 50%" });
+          gsap.set([n1, n2], { opacity: 0, scale: 0.9, transformOrigin: "50% 50%" });
+          gsap.set(wire, { attr: { "stroke-dasharray": 122, "stroke-dashoffset": 122 } });
+          gsap.set(part, { opacity: 0, y: 12 });
+          gsap.set(chats, { opacity: 0, y: 22 });
+
+          tl.fromTo(kicker, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.10);
+
+          // Scene 1 (0.0-2.6s) — card 1 assembles and three lines type into the skill file.
+          tl.fromTo(c1, { opacity: 0, y: 46, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.78, ease: "power3.out" }, 0.10);
+          var SRC = "---\nname: bq-report\n---\n\nQuery BigQuery, then\nrender an HTML report.";
+          var typed = { i: 0 };
+          tl.to(typed, {
+            i: SRC.length, duration: 1.5, ease: "none",
+            onUpdate: function () { code.textContent = SRC.slice(0, Math.round(typed.i)); }
+          }, 0.75);
+
+          // Scene 2 (2.6-4.4s) — /reload pops on and the status strip flips to LOADED.
+          tl.fromTo(pill, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" }, 2.62);
+          var clock = { t: 0 };
+          tl.to(clock, {
+            t: 11, duration: 11, ease: "none",
+            onUpdate: function () {
+              var want = clock.t >= 3.35 ? "LOADED" : "DRAFT";
+              if (statusEl.textContent !== want) statusEl.textContent = want;
+              statusEl.style.color = clock.t >= 3.35 ? "rgba(233,238,246,0.72)" : "rgba(233,238,246,0.56)";
+            }
+          }, 0);
+
+          // Scene 3 (4.4-7.0s) — card 2: the A2A link draws, the return path answers.
+          tl.fromTo(c2, { opacity: 0, y: 46, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.78, ease: "power3.out" }, 4.42);
+          tl.fromTo([n1, n2], { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.55, ease: "power3.out", stagger: 0.18 }, 4.90);
+          tl.to(wire, { attr: { "stroke-dashoffset": 0 }, duration: 0.6, ease: "power2.out" }, 5.45);
+          tl.fromTo(part, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 6.05);
+
+          // Scene 4 (7.0-10.56s) — card 3: scheduled chats stack in; the newest is the cyan moment.
+          tl.fromTo(c3, { opacity: 0, y: 46, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.78, ease: "power3.out" }, 7.02);
+          tl.fromTo(chats, { opacity: 0, y: 22 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out", stagger: 0.42 }, 7.50);
+          tl.to(chats[2], {
+            borderColor: "rgba(92,225,242,0.50)",
+            color: "rgba(233,238,246,0.88)",
+            boxShadow: "0 0 24px rgba(92,225,242,0.22)",
+            duration: 0.7, ease: "power2.out"
+          }, 9.30);
+
+          // Scene 5 (10.56-11.0s) — hold; bounded jitter on the right card only.
+          var jitter = { p: 0 };
+          tl.to(jitter, {
+            p: 1, duration: 0.44, ease: "none",
+            onUpdate: function () { gsap.set(c3, { y: Math.sin(jitter.p * Math.PI * 2) * 1.2 }); }
+          }, 10.56);
+
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

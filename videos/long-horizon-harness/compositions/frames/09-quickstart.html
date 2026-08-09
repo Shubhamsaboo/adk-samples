@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .qs-ground{ position:absolute; inset:0; background:#06080C; }
+        .qs-sky{
+          position:absolute; inset:0;
+          background:radial-gradient(76% 62% at 50% 46%, rgba(126,176,204,0.09) 0%, rgba(6,8,12,0) 72%);
+        }
+        .qs-kicker{
+          position:absolute; left:4.2cqw; top:4.2cqw;
+          font-family:"JetBrains Mono", monospace; font-size:28px; letter-spacing:0.16em;
+          text-transform:uppercase; color:rgba(233,238,246,0.52);
+        }
+        .qs-kicker i{ color:#5CE1F2; font-style:normal; margin-right:0.6em; }
+
+        .qs-term{
+          position:absolute; left:269px; top:222px; width:1382px; height:540px;
+          background:#080B10; border:1px solid rgba(233,238,246,0.12); border-radius:8px;
+          box-shadow:0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45);
+          overflow:hidden;
+        }
+        .qs-bar{
+          height:56px; background:#141A23; border-bottom:1px solid rgba(233,238,246,0.09);
+          display:flex; align-items:center; padding:0 20px;
+          font-family:"JetBrains Mono", monospace; font-size:22px; letter-spacing:0.06em;
+          color:rgba(233,238,246,0.52);
+        }
+        .qs-dot{ width:9px; height:9px; border-radius:50%; background:rgba(233,238,246,0.28); margin-right:9px; }
+        .qs-path{ margin-left:16px; }
+        .qs-body{
+          padding:26px 28px;
+          font-family:"JetBrains Mono", monospace; font-size:1.67cqw; line-height:1.75;
+          color:rgba(233,238,246,0.78); white-space:normal; word-break:break-all;
+        }
+        .qs-l{ display:block; margin-bottom:6px; }
+        .qs-p{ color:#5DB8A6; }
+        .qs-cmd{ color:#5CE1F2; }
+        .qs-flag{ color:rgba(233,238,246,0.62); }
+        .qs-str{ color:#5DB8A6; }
+        .qs-ok{ color:rgba(233,238,246,0.58); }
+        .qs-ok b{ color:#5DB872; font-weight:400; }
+        .qs-hero{ display:inline-block; padding:2px 8px; margin-left:-8px; border-radius:6px; }
+        .qs-strip{
+          position:absolute; left:0; right:0; bottom:0; height:52px; background:#141A23;
+          border-top:1px solid rgba(233,238,246,0.09);
+          display:flex; align-items:center; padding:0 22px;
+          font-family:"JetBrains Mono", monospace; font-size:20px; letter-spacing:0.08em;
+          color:rgba(233,238,246,0.58);
+        }
+        .qs-caption{
+          position:absolute; left:269px; top:790px;
+          font-family:"JetBrains Mono", monospace; font-size:24px; letter-spacing:0.10em;
+          color:rgba(233,238,246,0.52);
+        }
+      </style>
+
+      <div id="root" data-composition-id="09-quickstart" data-start="0" data-duration="8.5" data-width="1920" data-height="1080">
+        <div id="qs-ground" class="clip qs-ground" data-start="0" data-duration="8.5" data-track-index="0">
+          <div class="qs-sky"></div>
+        </div>
+
+        <div class="qs-kicker" id="qs-kicker"><i>&#10033;</i>QUICKSTART</div>
+
+        <div class="qs-term" id="qs-term">
+          <div class="qs-bar"><span class="qs-dot"></span><span class="qs-dot"></span><span class="qs-dot"></span><span class="qs-path">~/adk-samples</span></div>
+          <div class="qs-body">
+            <span class="qs-l"><span class="qs-p">$&#160;</span><span id="qs-t1"></span></span>
+            <span class="qs-l"><span class="qs-p">$&#160;</span><span id="qs-t2"></span></span>
+            <span class="qs-l"><span class="qs-p">$&#160;</span><span class="qs-hero" id="qs-hero"><span id="qs-t3"></span></span><span id="qs-caret">&#9612;</span></span>
+            <span class="qs-l qs-ok" id="qs-o1"><b>&#10003;</b> dependencies installed</span>
+            <span class="qs-l qs-ok" id="qs-o2"><b>&#10003;</b> .env seeded from .env.example</span>
+          </div>
+          <div class="qs-strip" id="qs-strip">READY</div>
+        </div>
+
+        <div class="qs-caption" id="qs-caption">CLONE &#183; ONE MAKE TARGET</div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "09-quickstart";
+
+          var term = document.getElementById('qs-term');
+          var kicker = document.getElementById('qs-kicker');
+          var caption = document.getElementById('qs-caption');
+          var t1 = document.getElementById('qs-t1');
+          var t2 = document.getElementById('qs-t2');
+          var t3 = document.getElementById('qs-t3');
+          var hero = document.getElementById('qs-hero');
+          var caret = document.getElementById('qs-caret');
+          var o1 = document.getElementById('qs-o1');
+          var o2 = document.getElementById('qs-o2');
+          var strip = document.getElementById('qs-strip');
+
+          // Verbatim from the sample's own README — never paraphrased.
+          var L1 = "git clone --depth 1 --filter=blob:none --sparse https://github.com/google/adk-samples.git";
+          var L2 = "git sparse-checkout set core/python/long-horizon-harness";
+          var L3 = "make dev-local";
+
+          gsap.set(term, { opacity: 0, y: 34, scale: 0.985, transformOrigin: "50% 50%" });
+          gsap.set([o1, o2], { opacity: 0, y: 12 });
+          gsap.set(hero, { backgroundColor: "rgba(92,225,242,0)" });
+
+          function typer(el, text, at, dur) {
+            var p = { i: 0 };
+            tl.to(p, {
+              i: text.length, duration: dur, ease: "none",
+              onUpdate: function () { el.textContent = text.slice(0, Math.round(p.i)); }
+            }, at);
+          }
+
+          // Scene 1 (0.0-1.6s) — the terminal arrives once, then the camera is still.
+          tl.fromTo(term, { opacity: 0, y: 34, scale: 0.985 }, { opacity: 1, y: 0, scale: 1, duration: 0.85, ease: "power3.out" }, 0.05);
+          tl.fromTo(kicker, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.30);
+          tl.fromTo(caption, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 0.55);
+
+          // Scene 2 (1.6-3.4s) — the two clone commands type on.
+          typer(t1, L1, 1.60, 1.05);
+          typer(t2, L2, 2.72, 0.62);
+
+          // Scene 3 (3.4-5.7s) — the make target types, and the status strip reports the first run.
+          typer(t3, L3, 3.44, 0.55);
+          var clock = { t: 0 };
+          tl.to(clock, {
+            t: 8, duration: 8, ease: "none",
+            onUpdate: function () {
+              var want = clock.t >= 4.10 ? "first run installs deps · seeds .env" : "READY";
+              if (strip.textContent !== want) strip.textContent = want;
+              caret.style.opacity = (clock.t * 1.7 % 1.0) < 0.5 ? "0.85" : "0.08";
+            }
+          }, 0);
+
+          // Scene 4 (5.7-8.0s) — the ok rows print and `make dev-local` takes the one cyan moment.
+          tl.fromTo(o1, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 5.72);
+          tl.fromTo(o2, { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 6.16);
+          tl.fromTo(hero,
+            { backgroundColor: "rgba(92,225,242,0.00)", boxShadow: "0 0 0px rgba(92,225,242,0)" },
+            { backgroundColor: "rgba(92,225,242,0.12)", boxShadow: "0 0 22px rgba(92,225,242,0.22)", duration: 0.7, ease: "power2.out" },
+            6.30);
+
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

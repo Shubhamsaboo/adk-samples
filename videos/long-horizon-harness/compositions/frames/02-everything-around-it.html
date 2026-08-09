@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .ea-ground{ position:absolute; inset:0; background:#06080C; }
+        .ea-sky{
+          position:absolute; inset:0;
+          background:radial-gradient(96% 70% at 50% 40%, rgba(126,176,204,0.075) 0%, rgba(6,8,12,0) 68%);
+        }
+        .ea-world{ position:absolute; inset:0; }
+
+        .ea-panel{
+          position:absolute;
+          background:#0E1219;
+          border:1px solid rgba(233,238,246,0.10);
+          border-radius:12px;
+          box-shadow:0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45);
+          overflow:hidden;
+        }
+        .ea-bar{
+          height:52px; background:#141A23;
+          border-bottom:1px solid rgba(233,238,246,0.09);
+          display:flex; align-items:center; padding:0 20px;
+          font-family:"JetBrains Mono", monospace; font-size:22px; letter-spacing:0.14em;
+          color:rgba(233,238,246,0.68);
+        }
+        .ea-body{ position:relative; padding:20px; height:calc(100% - 52px); overflow:hidden; }
+        .ea-scroll{ position:absolute; left:20px; right:20px; top:18px; }
+        .ea-row{
+          font-family:"JetBrains Mono", monospace; font-size:20px; line-height:2.0;
+          color:rgba(233,238,246,0.58); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+        }
+        .ea-row b{ color:rgba(233,238,246,0.58); font-weight:400; }
+        .ea-dot{
+          display:inline-block; width:7px; height:7px; border-radius:50%;
+          background:rgba(233,238,246,0.52); margin-right:12px; vertical-align:middle;
+        }
+        .ea-count{
+          position:absolute; right:22px; bottom:18px;
+          font-family:"Inter", sans-serif; font-weight:700; font-size:64px; line-height:1;
+          letter-spacing:-0.03em; color:rgba(233,238,246,0.86);
+        }
+        .ea-count em{
+          font-family:"JetBrains Mono", monospace; font-style:normal; font-weight:400;
+          font-size:20px; letter-spacing:0.06em; color:rgba(233,238,246,0.54);
+          display:block; text-align:right; margin-top:6px;
+        }
+        .ea-chips{ position:absolute; left:120px; top:700px; width:330px; }
+        .ea-chip{
+          background:#161C26; border:1px solid rgba(233,238,246,0.10); border-radius:8px;
+          padding:12px 16px; margin-top:10px;
+          font-family:"JetBrains Mono", monospace; font-size:19px; letter-spacing:0.06em;
+          color:rgba(233,238,246,0.58);
+        }
+      </style>
+
+      <div id="root" data-composition-id="02-everything-around-it" data-start="0" data-duration="8.9" data-width="1920" data-height="1080">
+        <div id="ea-ground" class="clip ea-ground" data-start="0" data-duration="8.9" data-track-index="0">
+          <div class="ea-sky"></div>
+        </div>
+
+        <div class="ea-world" id="ea-world">
+          <!-- P1 MEMORY -->
+          <div class="ea-panel" data-layout-allow-overlap id="ea-p1" style="left:262px; top:238px; width:620px; height:392px;">
+            <div class="ea-bar">MEMORY</div>
+            <div class="ea-body">
+              <div class="ea-scroll" id="ea-scroll1">
+                <div class="ea-row"><span class="ea-dot"></span>session <b>a41c</b> — prefs, project, tone</div>
+                <div class="ea-row"><span class="ea-dot"></span>session <b>b0f2</b> — bigquery dataset</div>
+                <div class="ea-row"><span class="ea-dot"></span>session <b>c7d9</b> — review checklist</div>
+                <div class="ea-row"><span class="ea-dot"></span>session <b>d13a</b> — deploy notes</div>
+                <div class="ea-row"><span class="ea-dot"></span>session <b>e88b</b> — naming convention</div>
+                <div class="ea-row"><span class="ea-dot"></span>session <b>f204</b> — retry policy</div>
+                <div class="ea-row"><span class="ea-dot"></span>session <b>0a5e</b> — timezone</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- P2 SANDBOX -->
+          <div class="ea-panel" data-layout-allow-overlap id="ea-p2" style="left:742px; top:352px; width:640px; height:368px;">
+            <div class="ea-bar">SANDBOX</div>
+            <div class="ea-body">
+              <div class="ea-row" style="color:rgba(233,238,246,0.54)"><span id="ea-type"></span><span id="ea-caret">&#9612;</span></div>
+              <div class="ea-row" id="ea-out1" style="opacity:0">building wheel &#8230;</div>
+              <div class="ea-row" id="ea-out2" style="opacity:0">container warm &#183; reattached</div>
+            </div>
+          </div>
+
+          <!-- P3 SECRETS -->
+          <div class="ea-panel" data-layout-allow-overlap id="ea-p3" style="left:1146px; top:196px; width:600px; height:352px;">
+            <div class="ea-bar">SECRETS</div>
+            <div class="ea-body">
+              <div class="ea-row">OPENAI_API_KEY <b>&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</b></div>
+              <div class="ea-row">SLACK_TOKEN <b>&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</b></div>
+              <div class="ea-row">GH_PAT <b>&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</b></div>
+              <div class="ea-row">BQ_PROJECT <b>&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</b></div>
+            </div>
+          </div>
+
+          <!-- P4 GUARDRAILS -->
+          <div class="ea-panel" data-layout-allow-overlap id="ea-p4" style="left:606px; top:520px; width:672px; height:300px;">
+            <div class="ea-bar">GUARDRAILS</div>
+            <div class="ea-body">
+              <div class="ea-row">iteration budget</div>
+              <div class="ea-row">no-progress halt</div>
+              <div class="ea-row">repeated-failure halt</div>
+              <div class="ea-count"><span id="ea-num">0</span><em>iterations</em></div>
+            </div>
+          </div>
+
+          <div class="ea-chips" data-layout-allow-overlap id="ea-chips">
+            <div class="ea-chip">halt_reason: iteration_budget</div>
+            <div class="ea-chip">halt_reason: no_progress</div>
+          </div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "02-everything-around-it";
+
+          var world = document.getElementById('ea-world');
+          var p1 = document.getElementById('ea-p1');
+          var p2 = document.getElementById('ea-p2');
+          var p3 = document.getElementById('ea-p3');
+          var p4 = document.getElementById('ea-p4');
+          var chips = document.getElementById('ea-chips');
+          var scroll1 = document.getElementById('ea-scroll1');
+          var typeEl = document.getElementById('ea-type');
+          var caret = document.getElementById('ea-caret');
+          var num = document.getElementById('ea-num');
+
+          var panels = [p1, p2, p3, p4];
+          panels.forEach(function (p) { gsap.set(p, { opacity: 0, scale: 0.9, transformOrigin: "50% 50%" }); });
+          gsap.set(chips, { opacity: 0, x: -40 });
+
+          // Camera — a slow steady zoom-out under the accumulation (multi-phase-camera).
+          gsap.set(world, { transformOrigin: "50% 50%", scale: 1.14 });
+          tl.to(world, { scale: 0.90, duration: 8.4, ease: "power1.inOut" }, 0);
+
+          // Scene 1 (0.0-2.2s) — MEMORY, with its session rows scrolling as live density.
+          tl.fromTo(p1, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.72, ease: "power3.out" }, 0.10);
+          tl.fromTo(scroll1, { y: 0 }, { y: -132, duration: 8.0, ease: "none" }, 0.5);
+
+          // Scene 2 (2.2-4.1s) — SANDBOX, a command typing inside it.
+          tl.fromTo(p2, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.72, ease: "power3.out" }, 2.22);
+          var CMD = "uv run --with google-cloud-bigquery";
+          var typed = { i: 0 };
+          tl.to(typed, {
+            i: CMD.length, duration: 1.5, ease: "none",
+            onUpdate: function () { typeEl.textContent = CMD.slice(0, Math.round(typed.i)); }
+          }, 2.60);
+          // square-wave caret blink, derived from timeline time (deterministic)
+          var blink = { p: 0 };
+          tl.to(blink, {
+            p: 1, duration: 6.2, ease: "none",
+            onUpdate: function () { caret.style.opacity = (blink.p * 6.2 % 1.0) < 0.5 ? "1" : "0.05"; }
+          }, 2.30);
+          tl.to("#ea-out1", { opacity: 1, duration: 0.3, ease: "power2.out" }, 4.35);
+          tl.to("#ea-out2", { opacity: 1, duration: 0.3, ease: "power2.out" }, 4.95);
+
+          // Scene 3 (4.1-6.2s) — SECRETS slides in from the right edge; alert chips stack in.
+          tl.fromTo(p3, { opacity: 0, x: 190, scale: 0.94 }, { opacity: 1, x: 0, scale: 1, duration: 0.8, ease: "power3.out" }, 4.12);
+          tl.fromTo(chips, { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 5.20);
+
+          // Scene 4 (6.2-8.4s) — GUARDRAILS lands over the pile, its counter climbing.
+          tl.fromTo(p4, { opacity: 0, scale: 0.9 }, { opacity: 1, scale: 1, duration: 0.72, ease: "power3.out" }, 6.22);
+          var counter = { v: 0 };
+          tl.to(counter, {
+            v: 24, duration: 1.6, ease: "power1.out",
+            onUpdate: function () { num.textContent = Math.round(counter.v); }
+          }, 6.55);
+
+          // Scene 5 (8.4-8.9s) — the reverse push-in shoves every panel out to the frame edges.
+          tl.to(world, { scale: 1.10, duration: 0.5, ease: "power2.in" }, 8.40);
+          var shove = [
+            [p1, -640, -300], [p2, -80, 470], [p3, 660, -330], [p4, 250, 470]
+          ];
+          shove.forEach(function (s) {
+            tl.to(s[0], { x: s[1], y: s[2], scale: 0.82, duration: 0.5, ease: "power2.in" }, 8.40);
+          });
+          tl.to(chips, { x: -320, duration: 0.5, ease: "power2.in" }, 8.40);
+
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

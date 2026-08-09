@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .dp-ground{ position:absolute; inset:0; background:#06080C; }
+        .dp-sky{
+          position:absolute; inset:0;
+          background:radial-gradient(80% 60% at 34% 48%, rgba(126,176,204,0.09) 0%, rgba(6,8,12,0) 70%);
+        }
+        .dp-kicker{
+          position:absolute; left:4.2cqw; top:4.2cqw;
+          font-family:"JetBrains Mono", monospace; font-size:28px; letter-spacing:0.16em;
+          text-transform:uppercase; color:rgba(233,238,246,0.52);
+        }
+        .dp-kicker i{ color:#5CE1F2; font-style:normal; margin-right:0.6em; }
+
+        .dp-lock{ position:absolute; left:4.2cqw; top:300px; display:flex; align-items:flex-end; gap:26px; }
+        .dp-fig{
+          font-size:9.4cqw; font-weight:700; line-height:0.95; letter-spacing:-0.038em;
+          color:#E9EEF6;
+        }
+        .dp-unit{
+          font-family:"JetBrains Mono", monospace; font-size:2.08cqw; line-height:1;
+          color:rgba(233,238,246,0.56); padding-bottom:18px; letter-spacing:0.06em;
+        }
+        .dp-rule{
+          position:absolute; left:4.2cqw; top:498px; width:740px; height:1px;
+          background:rgba(233,238,246,0.14); transform-origin:0% 50%;
+        }
+        .dp-sub{
+          position:absolute; left:4.2cqw; top:530px; width:700px;
+          font-size:1.5cqw; line-height:1.5; color:rgba(233,238,246,0.62);
+        }
+        .dp-pill{
+          position:absolute; left:790px; top:478px;
+          background:#5CE1F2; color:#06080C; border-radius:9999px;
+          padding:10px 22px;
+          font-family:"JetBrains Mono", monospace; font-size:20px; font-weight:700; letter-spacing:0.12em;
+        }
+        .dp-row{
+          position:absolute; left:980px; width:820px; height:88px;
+          background:#0E1219; border:1px solid rgba(233,238,246,0.10); border-radius:12px;
+          display:flex; align-items:center; padding:0 24px; gap:20px;
+          font-family:"JetBrains Mono", monospace; font-size:21px; letter-spacing:0.04em;
+          color:rgba(233,238,246,0.66);
+        }
+        .dp-idx{ color:rgba(233,238,246,0.52); font-size:19px; letter-spacing:0.14em; }
+        .dp-name{ color:rgba(233,238,246,0.92); }
+      </style>
+
+      <div id="root" data-composition-id="10-deploy" data-start="0" data-duration="6.6" data-width="1920" data-height="1080">
+        <div id="dp-ground" class="clip dp-ground" data-start="0" data-duration="6.6" data-track-index="0">
+          <div class="dp-sky"></div>
+        </div>
+
+        <div class="dp-kicker" id="dp-kicker"><i>&#10033;</i>MAKE DEPLOY</div>
+
+        <div class="dp-lock" id="dp-lock">
+          <div class="dp-fig" id="dp-fig">1</div>
+          <div class="dp-unit">command</div>
+        </div>
+        <div class="dp-rule" id="dp-rule"></div>
+        <div class="dp-sub" id="dp-sub">provisions the infrastructure and ships the code</div>
+        <div class="dp-pill" id="dp-pill">3 STEPS</div>
+
+        <div class="dp-row" id="dp-r1" style="top:262px;"><span class="dp-idx">01</span><span class="dp-name">TERRAFORM</span><span>Cloud SQL &#183; Secret Manager &#183; IAM &#183; Scheduler</span></div>
+        <div class="dp-row" id="dp-r2" style="top:372px;"><span class="dp-idx">02</span><span class="dp-name">AGENTS-CLI</span><span>backend image &#8594; lha</span></div>
+        <div class="dp-row" id="dp-r3" style="top:482px;"><span class="dp-idx">03</span><span class="dp-name">CLOUD BUILD</span><span>web image &#8594; lha-web</span></div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "10-deploy";
+
+          var kicker = document.getElementById('dp-kicker');
+          var lock = document.getElementById('dp-lock');
+          var fig = document.getElementById('dp-fig');
+          var rule = document.getElementById('dp-rule');
+          var sub = document.getElementById('dp-sub');
+          var pill = document.getElementById('dp-pill');
+          var rows = ['dp-r1', 'dp-r2', 'dp-r3'].map(function (i) { return document.getElementById(i); });
+
+          gsap.set(lock, { opacity: 0, y: 30 });
+          gsap.set(rule, { scaleX: 0 });
+          gsap.set(sub, { opacity: 0, y: 14 });
+          gsap.set(pill, { opacity: 0, scale: 0.86, transformOrigin: "0% 50%" });
+          gsap.set(rows, { opacity: 0, x: 56 });
+
+          // Scene 1 (0.0-1.8s) — the hero figure settles over its rule.
+          tl.fromTo(kicker, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.6, ease: "power3.out" }, 0.05);
+          tl.fromTo(lock, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" }, 0.12);
+          var counter = { v: 0 };
+          tl.to(counter, {
+            v: 1, duration: 0.55, ease: "power2.out",
+            onUpdate: function () { fig.textContent = String(Math.max(0, Math.round(counter.v))); }
+          }, 0.18);
+          tl.to(rule, { scaleX: 1, duration: 0.9, ease: "power3.out" }, 0.55);
+          tl.fromTo(sub, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }, 0.95);
+
+          // Scenes 2-4 — the three deploy steps land, one per spoken cue.
+          var at = [1.80, 3.30, 4.40];
+          rows.forEach(function (r, i) {
+            tl.fromTo(r, { opacity: 0, x: 56 }, { opacity: 1, x: 0, duration: 0.62, ease: "power3.out" }, at[i]);
+          });
+
+          // The one cyan moment — the 3 STEPS pill lands with the third row.
+          tl.fromTo(pill,
+            { opacity: 0, scale: 0.86, boxShadow: "0 0 0px rgba(92,225,242,0)" },
+            { opacity: 1, scale: 1, boxShadow: "0 0 26px rgba(92,225,242,0.30)", duration: 0.55, ease: "power3.out" },
+            4.62);
+
+          // Scene 5 (5.4-6.0s) — hold.
+          var jitter = { p: 0 };
+          tl.to(jitter, {
+            p: 1, duration: 0.6, ease: "none",
+            onUpdate: function () { gsap.set(lock, { y: Math.sin(jitter.p * Math.PI * 2) * 1.1 }); }
+          }, 5.40);
+
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

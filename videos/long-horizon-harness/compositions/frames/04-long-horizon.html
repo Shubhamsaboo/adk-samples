@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .lh-ground{ position:absolute; inset:0; background:#06080C; }
+        .lh-plate{
+          position:absolute; inset:0;
+          background-image:url("assets/long-horizon-banner.webp");
+          background-size:cover; background-position:center 42%;
+          opacity:0.55;
+        }
+        /* the plate is dimmed to ~45% and vignetted so the type stays the voice */
+        .lh-veil{
+          position:absolute; inset:0;
+          background:
+            linear-gradient(90deg, rgba(6,8,12,0.94) 0%, rgba(6,8,12,0.80) 34%, rgba(6,8,12,0.42) 62%, rgba(6,8,12,0.58) 100%),
+            radial-gradient(120% 100% at 50% 50%, rgba(6,8,12,0) 38%, rgba(6,8,12,0.72) 100%);
+        }
+        .lh-kicker{
+          position:absolute; left:4.2cqw; top:4.2cqw;
+          font-family:"JetBrains Mono", monospace; font-size:28px; letter-spacing:0.16em;
+          text-transform:uppercase; color:rgba(233,238,246,0.56);
+        }
+        .lh-kicker i{ color:#5CE1F2; font-style:normal; margin-right:0.6em; }
+        .lh-stack{ position:absolute; left:4.2cqw; top:30%; width:66cqw; }
+        .lh-word{
+          font-size:8.6cqw; font-weight:700; line-height:0.98; letter-spacing:-0.040em;
+          white-space:nowrap;
+        }
+        .lh-lead{
+          margin-top:0.42em; font-size:2.08cqw; font-weight:400; line-height:1.5;
+          color:rgba(233,238,246,0.78);
+        }
+        .lh-chips{ margin-top:1.5em; display:flex; gap:16px; }
+        .lh-chip{
+          background:rgba(14,18,25,0.86); border:1px solid rgba(233,238,246,0.14);
+          border-radius:9999px; padding:12px 22px;
+          font-family:"JetBrains Mono", monospace; font-size:22px; letter-spacing:0.10em;
+          color:rgba(233,238,246,0.74);
+        }
+        .lh-index{
+          position:absolute; left:4.2cqw; top:800px;
+          font-family:"JetBrains Mono", monospace; font-size:26px; letter-spacing:0.04em;
+          color:rgba(233,238,246,0.52);
+        }
+      </style>
+
+      <div id="root" data-composition-id="04-long-horizon" data-start="0" data-duration="10" data-width="1920" data-height="1080">
+        <div id="lh-ground" class="clip lh-ground" data-start="0" data-duration="10" data-track-index="0">
+          <div class="lh-plate" id="lh-plate"></div>
+          <div class="lh-veil"></div>
+        </div>
+
+        <div class="lh-kicker" id="lh-kicker"><i>&#10033;</i>REFERENCE IMPLEMENTATION</div>
+
+        <div class="lh-stack">
+          <div class="lh-word" id="lh-word">Long Horizon</div>
+          <div class="lh-lead" id="lh-lead">A reference agent harness</div>
+          <div class="lh-chips">
+            <div class="lh-chip" id="lh-c1">ADK 2.5.x</div>
+            <div class="lh-chip" id="lh-c2">AGENT PLATFORM</div>
+          </div>
+        </div>
+
+        <div class="lh-index"><span id="lh-path"></span><span id="lh-caret">&#9612;</span></div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "04-long-horizon";
+
+          var plate = document.getElementById('lh-plate');
+          var word = document.getElementById('lh-word');
+          var lead = document.getElementById('lh-lead');
+          var c1 = document.getElementById('lh-c1');
+          var c2 = document.getElementById('lh-c2');
+          var kicker = document.getElementById('lh-kicker');
+          var pathEl = document.getElementById('lh-path');
+          var caret = document.getElementById('lh-caret');
+
+          gsap.set([lead, c1, c2], { opacity: 0 });
+          gsap.set(caret, { opacity: 0 });
+
+          // Scene 1 (0.0-2.6s) — the plate holds; ONE restrained scale-settle that finishes
+          // by 2.6s and never resumes. The wordmark arrives on one slide-up crossfade.
+          tl.fromTo(plate,
+            { scale: 1.075, opacity: 0.30 },
+            { scale: 1.0, opacity: 0.55, duration: 2.6, ease: "power2.out", transformOrigin: "52% 46%" },
+            0);
+          tl.fromTo(word,
+            { opacity: 0, y: 46, filter: "blur(16px)" },
+            { opacity: 1, y: 0, filter: "blur(0px)", duration: 1.15, ease: "power3.out" },
+            0.28);
+          tl.fromTo(kicker, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.8, ease: "power3.out" }, 0.95);
+
+          // Scene 2 (2.6-5.4s) — the value line sets under the wordmark as the voice names it.
+          tl.fromTo(lead,
+            { opacity: 0, y: 24 },
+            { opacity: 1, y: 0, duration: 0.9, ease: "power3.out" },
+            2.62);
+
+          // Scene 3 (5.4-7.6s) — the two platform chips fade up, staggered.
+          tl.fromTo([c1, c2],
+            { opacity: 0, y: 20, scale: 0.96 },
+            { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "power3.out", stagger: 0.22 },
+            5.42);
+
+          // Scene 4 (7.6-9.5s) — held read: the mono index types on, then everything stops.
+          var P = "core/python/long-horizon-harness";
+          var typed = { i: 0 };
+          tl.set(caret, { opacity: 1 }, 7.60);
+          tl.to(typed, {
+            i: P.length, duration: 1.15, ease: "none",
+            onUpdate: function () { pathEl.textContent = P.slice(0, Math.round(typed.i)); }
+          }, 7.62);
+          var blink = { p: 0 };
+          tl.to(blink, {
+            p: 1, duration: 1.9, ease: "none",
+            onUpdate: function () { caret.style.opacity = (blink.p * 3.2 % 1.0) < 0.5 ? "0.85" : "0.08"; }
+          }, 7.60);
+
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

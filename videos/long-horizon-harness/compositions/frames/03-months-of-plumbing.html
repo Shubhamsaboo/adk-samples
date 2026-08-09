@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .mp-ground{ position:absolute; inset:0; background:#06080C; }
+        .mp-sky{
+          position:absolute; inset:0;
+          background:radial-gradient(74% 56% at 50% 46%, rgba(126,176,204,0.085) 0%, rgba(6,8,12,0) 70%);
+        }
+        /* the four panels inherited from Frame 2, arriving already shoved to the edges */
+        .mp-edge{
+          position:absolute; background:#0E1219;
+          border:1px solid rgba(233,238,246,0.10); border-radius:12px;
+          box-shadow:0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45);
+          overflow:hidden;
+        }
+        .mp-edge .mp-bar{
+          height:52px; background:#141A23; border-bottom:1px solid rgba(233,238,246,0.09);
+          display:flex; align-items:center; padding:0 20px;
+          font-family:"JetBrains Mono", monospace; font-size:22px; letter-spacing:0.14em;
+          color:rgba(233,238,246,0.54);
+        }
+        .mp-edge .mp-row{
+          font-family:"JetBrains Mono", monospace; font-size:20px; line-height:2.0;
+          color:rgba(233,238,246,0.28); padding:0 20px; white-space:nowrap;
+        }
+        .mp-stage{
+          position:absolute; left:0; right:0; top:0; height:83%;
+          display:flex; align-items:center; justify-content:center;
+        }
+        .mp-beat{
+          position:absolute; width:78cqw; text-align:center;
+          font-size:7.3cqw; font-weight:700; line-height:1.02; letter-spacing:-0.032em;
+        }
+        .mp-w{ display:inline-block; }
+        .mp-hot{ color:#5CE1F2; }
+      </style>
+
+      <div id="root" data-composition-id="03-months-of-plumbing" data-start="0" data-duration="5.6" data-width="1920" data-height="1080">
+        <div id="mp-ground" class="clip mp-ground" data-start="0" data-duration="5.6" data-track-index="0">
+          <div class="mp-sky"></div>
+        </div>
+
+        <!-- handoff_in: shoved to the four edges, ~55% cropped, scale 0.82, still coasting outward -->
+        <div class="mp-edge" id="mp-e1" style="left:-378px; top:-62px; width:620px; height:392px;">
+          <div class="mp-bar">MEMORY</div>
+          <div class="mp-row">session a41c &#8212; prefs, project</div>
+          <div class="mp-row">session b0f2 &#8212; bigquery dataset</div>
+        </div>
+        <div class="mp-edge" id="mp-e2" style="left:662px; top:822px; width:640px; height:368px;">
+          <div class="mp-bar">SANDBOX</div>
+          <div class="mp-row">container warm &#183; reattached</div>
+        </div>
+        <div class="mp-edge" id="mp-e3" style="left:1806px; top:-134px; width:600px; height:352px;">
+          <div class="mp-bar">SECRETS</div>
+          <div class="mp-row">GH_PAT &#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;</div>
+        </div>
+        <div class="mp-edge" id="mp-e4" style="left:856px; top:990px; width:672px; height:300px;">
+          <div class="mp-bar">GUARDRAILS</div>
+          <div class="mp-row">iteration budget</div>
+        </div>
+
+        <div class="mp-stage">
+          <div class="mp-beat" id="mp-b1"><span class="mp-w">Months</span> <span class="mp-w">of</span> <span class="mp-w">plumbing.</span></div>
+          <div class="mp-beat" id="mp-b2"><span class="mp-w">Before</span> <span class="mp-w">anything</span> <span class="mp-w mp-hot" id="mp-hot">interesting.</span></div>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "03-months-of-plumbing";
+
+          var b1w = document.querySelectorAll('#mp-b1 .mp-w');
+          var b2w = document.querySelectorAll('#mp-b2 .mp-w');
+          var hot = document.getElementById('mp-hot');
+          var edges = ['mp-e1', 'mp-e2', 'mp-e3', 'mp-e4'].map(function (i) { return document.getElementById(i); });
+          var drift = [[-70, -34], [-16, 52], [72, -38], [28, 52]];
+
+          gsap.set('#mp-b2', { opacity: 1 });
+          gsap.set(b2w, { opacity: 0 });
+          gsap.set(edges, { scale: 0.82, opacity: 0.34, filter: "blur(1.5px)", transformOrigin: "50% 50%" });
+          gsap.set(hot, { color: "#E9EEF6" });
+
+          // handoff_in — the inherited panels coast outward and decelerate to rest by 1.2s.
+          edges.forEach(function (el, i) {
+            tl.fromTo(el, { x: 0, y: 0 }, { x: drift[i][0], y: drift[i][1], duration: 1.2, ease: "power3.out" }, 0);
+          });
+
+          // Scene 1 (0.0-2.0s) — beat 1 builds word by word in the opened centre.
+          tl.fromTo(b1w,
+            { opacity: 0, yPercent: 30, filter: "blur(12px)" },
+            { opacity: 1, yPercent: 0, filter: "blur(0px)", duration: 0.78, ease: "power3.out", stagger: 0.17 },
+            0.10);
+
+          // Scene 2 (2.0-2.15s) — waterfall cut: beat 1 clears left-to-right at word
+          // granularity while beat 2 arrives on the same vector at matched speed.
+          tl.to(b1w, { xPercent: -26, opacity: 0, duration: 0.30, ease: "power2.in", stagger: 0.05 }, 1.98);
+          tl.fromTo(b2w,
+            { xPercent: 34, opacity: 0 },
+            { xPercent: 0, opacity: 1, duration: 0.34, ease: "power2.out", stagger: 0.05 },
+            2.06);
+
+          // Scene 3 (2.15-4.3s) — the one cyan moment: "interesting." takes an
+          // attack-decay glow onto the signal colour as the voice reaches it.
+          tl.to(hot, { color: "#5CE1F2", duration: 0.24, ease: "power2.out" }, 2.98);
+          tl.fromTo(hot,
+            { textShadow: "0 0 0px rgba(92,225,242,0)", scale: 1 },
+            { textShadow: "0 0 26px rgba(92,225,242,0.55)", scale: 1.035, duration: 0.26, ease: "power2.out", transformOrigin: "50% 60%" },
+            2.98);
+          tl.to(hot, { textShadow: "0 0 16px rgba(92,225,242,0.30)", scale: 1, duration: 0.78, ease: "power2.out" }, 3.26);
+
+          // Scene 4 (4.3-5.2s) — held read, bounded jitter only.
+          var jitter = { p: 0 };
+          tl.to(jitter, {
+            p: 1, duration: 0.9, ease: "none",
+            onUpdate: function () { gsap.set('#mp-b2', { y: Math.sin(jitter.p * Math.PI * 2) * 1.2 }); }
+          }, 4.30);
+
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

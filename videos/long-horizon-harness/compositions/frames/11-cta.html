@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .ct-ground{ position:absolute; inset:0; background:#06080C; }
+        .ct-sky{
+          position:absolute; inset:0;
+          background:
+            radial-gradient(128% 86% at 50% 122%, rgba(126,176,204,0.16) 0%, rgba(126,176,204,0.05) 40%, rgba(6,8,12,0) 72%),
+            radial-gradient(62% 46% at 50% 40%, rgba(233,238,246,0.04) 0%, rgba(6,8,12,0) 74%);
+        }
+        .ct-stage{
+          position:absolute; left:0; right:0; top:0; height:83%;
+          display:flex; flex-direction:column; align-items:center; justify-content:center;
+        }
+        .ct-spike{ margin-bottom:0.5em; }
+        .ct-word{
+          font-size:7.3cqw; font-weight:700; line-height:1.02; letter-spacing:-0.032em;
+          text-align:center; white-space:nowrap;
+        }
+        .ct-w{ display:inline-block; }
+        .ct-index{
+          margin-top:0.9em;
+          font-family:"JetBrains Mono", monospace; font-size:26px; letter-spacing:0.10em;
+          color:rgba(233,238,246,0.62);
+        }
+        .ct-pill{
+          margin-top:1.5em;
+          background:#5CE1F2; color:#06080C; border-radius:9999px;
+          padding:16px 34px;
+          font-family:"JetBrains Mono", monospace; font-size:26px; font-weight:700; letter-spacing:0.06em;
+        }
+        .ct-note{
+          position:absolute; left:0; right:0; bottom:12%;
+          text-align:center;
+          font-family:"JetBrains Mono", monospace; font-size:21px; letter-spacing:0.10em;
+          color:rgba(233,238,246,0.52);
+        }
+      </style>
+
+      <div id="root" data-composition-id="11-cta" data-start="0" data-duration="6" data-width="1920" data-height="1080">
+        <div id="ct-ground" class="clip ct-ground" data-start="0" data-duration="6" data-track-index="0">
+          <div class="ct-sky" id="ct-sky"></div>
+        </div>
+
+        <div class="ct-stage">
+          <svg class="ct-spike" id="ct-spike" width="64" height="64" viewBox="0 0 64 64" fill="none">
+            <path id="ct-p1" d="M 32 8 L 32 56" stroke="#5CE1F2" stroke-width="4" stroke-linecap="round"/>
+            <path id="ct-p2" d="M 11 20 L 53 44" stroke="#5CE1F2" stroke-width="4" stroke-linecap="round"/>
+            <path id="ct-p3" d="M 11 44 L 53 20" stroke="#5CE1F2" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+          <div class="ct-word" id="ct-word"><span class="ct-w">Long</span> <span class="ct-w">Horizon</span></div>
+          <div class="ct-index" id="ct-index">github.com/google/adk-samples</div>
+          <div class="ct-pill" id="ct-pill">core/python/long-horizon-harness</div>
+        </div>
+
+        <div class="ct-note" id="ct-note">SAMPLE CODE &#183; NOT AN OFFICIALLY SUPPORTED GOOGLE PRODUCT</div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "11-cta";
+
+          var sky = document.getElementById('ct-sky');
+          var words = document.querySelectorAll('#ct-word .ct-w');
+          var index = document.getElementById('ct-index');
+          var pill = document.getElementById('ct-pill');
+          var note = document.getElementById('ct-note');
+          var strokes = ['ct-p1', 'ct-p2', 'ct-p3'].map(function (i) { return document.getElementById(i); });
+
+          gsap.set(index, { opacity: 0, y: 18 });
+          gsap.set(pill, { opacity: 0, scale: 0.88, transformOrigin: "50% 50%" });
+          gsap.set(note, { opacity: 0 });
+          strokes.forEach(function (s) {
+            gsap.set(s, { attr: { "stroke-dasharray": 52, "stroke-dashoffset": 52 } });
+          });
+
+          // Scene 1 (0.0-1.4s) — the light returns, the spike draws on, the wordmark assembles.
+          tl.fromTo(sky, { opacity: 0.30 }, { opacity: 1, duration: 1.5, ease: "power2.out" }, 0);
+          tl.to(strokes, { attr: { "stroke-dashoffset": 0 }, duration: 0.42, ease: "power3.out", stagger: 0.10 }, 0.10);
+          tl.fromTo(words,
+            { opacity: 0, yPercent: 26, filter: "blur(12px)" },
+            { opacity: 1, yPercent: 0, filter: "blur(0px)", duration: 0.85, ease: "power3.out", stagger: 0.20 },
+            0.42);
+
+          // Scene 2 (1.4-2.6s) — the repo index sets beneath the mark.
+          tl.fromTo(index, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" }, 1.42);
+
+          // Scene 3 (2.6-3.9s) — the one cyan moment: the path lands as the callout pill.
+          tl.fromTo(pill,
+            { opacity: 0, scale: 0.88, boxShadow: "0 0 0px rgba(92,225,242,0)" },
+            { opacity: 1, scale: 1, boxShadow: "0 0 34px rgba(92,225,242,0.32)", duration: 0.62, ease: "power3.out" },
+            2.62);
+
+          // Scene 4 (3.9-6.0s) — the held close. Final frame, so a closing settle is allowed.
+          tl.fromTo(note, { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" }, 3.92);
+          tl.to(sky, { opacity: 0.72, duration: 1.9, ease: "power2.inOut" }, 4.10);
+
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

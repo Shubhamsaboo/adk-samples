@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .rs-ground{ position:absolute; inset:0; background:#06080C; }
+        .rs-sky{
+          position:absolute; inset:0;
+          background:radial-gradient(78% 66% at 66% 46%, rgba(126,176,204,0.085) 0%, rgba(6,8,12,0) 70%);
+        }
+        .rs-kicker{
+          position:absolute; left:4.2cqw; top:4.2cqw;
+          font-family:"JetBrains Mono", monospace; font-size:28px; letter-spacing:0.16em;
+          text-transform:uppercase; color:rgba(233,238,246,0.52);
+        }
+        .rs-kicker i{ color:#5CE1F2; font-style:normal; margin-right:0.6em; }
+
+        /* screen-frame — drawn to match the hoisted video rect exactly:
+           video x760 y180 w1000 h632; frame 756,136 -> 1764,816 */
+        .rs-frame{
+          position:absolute; left:756px; top:136px; width:1008px; height:680px;
+          background:#141A23; border:1px solid rgba(233,238,246,0.14); border-radius:12px;
+          box-shadow:0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45);
+          overflow:hidden;
+        }
+        .rs-chrome{ position:absolute; left:0; top:0; width:100%; height:44px; display:flex; align-items:center; padding:0 16px; }
+        .rs-dot{ width:9px; height:9px; border-radius:50%; background:rgba(233,238,246,0.28); margin-right:9px; }
+        .rs-fill{ position:absolute; left:4px; top:44px; width:1000px; height:632px; background:#080B10; }
+
+        .rs-chip{
+          position:absolute; left:80px; width:560px;
+          background:#0E1219; border:1px solid rgba(233,238,246,0.10); border-radius:12px;
+          box-shadow:0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45);
+          padding:22px 26px;
+        }
+        .rs-chip b{
+          display:block; font-family:"JetBrains Mono", monospace; font-size:21px; font-weight:400;
+          letter-spacing:0.13em; color:rgba(233,238,246,0.86); margin-bottom:10px;
+        }
+        .rs-chip span{ font-size:24px; line-height:1.45; color:rgba(233,238,246,0.62); }
+        .rs-leads{ position:absolute; inset:0; }
+      </style>
+
+      <div id="root" data-composition-id="07-running" data-start="0" data-duration="8.7" data-width="1920" data-height="1080">
+        <div id="rs-ground" class="clip rs-ground" data-start="0" data-duration="8.7" data-track-index="0">
+          <div class="rs-sky"></div>
+        </div>
+
+        <div class="rs-kicker" id="rs-kicker"><i>&#10033;</i>RUNNING</div>
+
+        <div class="rs-frame" id="rs-frame">
+          <div class="rs-chrome"><span class="rs-dot"></span><span class="rs-dot"></span><span class="rs-dot"></span></div>
+          <div class="rs-fill"></div>
+        </div>
+
+        <!-- the real product recording, hoisted to the host root with explicit geometry -->
+        <!-- approved frame video hoisted by assemble-index -->
+
+        <svg class="rs-leads" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+          <path id="rs-lead1" d="M 640 350 L 1010 350" fill="none" stroke="rgba(233,238,246,0.28)" stroke-width="1.6" vector-effect="non-scaling-stroke" opacity="0"/>
+          <path id="rs-lead2" d="M 640 596 L 1660 596" fill="none" stroke="#5CE1F2" stroke-width="2.0" vector-effect="non-scaling-stroke" opacity="0"/>
+        </svg>
+
+        <div class="rs-chip" id="rs-c1" style="top:290px;">
+          <b>STREAMING TOOL CALLS</b>
+          <span>terminal &#183; write_file &#183; load_skill, as they happen</span>
+        </div>
+        <div class="rs-chip" id="rs-c2" style="top:536px;">
+          <b>ACTIVITY &#183; MEMORY &#183; SECRETS &#183; SKILLS</b>
+          <span>the harness, visible while it works</span>
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "07-running";
+
+          var frame = document.getElementById('rs-frame');
+          var kicker = document.getElementById('rs-kicker');
+          var c1 = document.getElementById('rs-c1');
+          var c2 = document.getElementById('rs-c2');
+          var l1 = document.getElementById('rs-lead1');
+          var l2 = document.getElementById('rs-lead2');
+
+          // The recording is hoisted to the host root at a FIXED rect, so the chrome around it
+          // never moves — it resolves with opacity only, and the video starts once it has landed.
+          gsap.set(frame, { opacity: 0 });
+          gsap.set([c1, c2], { opacity: 0, x: -34 });
+          gsap.set(l1, { attr: { "stroke-dasharray": 370, "stroke-dashoffset": 370 }, opacity: 0 });
+          gsap.set(l2, { attr: { "stroke-dasharray": 1020, "stroke-dashoffset": 1020 }, opacity: 0 });
+
+          // Scene 1 (0.0-1.9s) — the screen-frame resolves; the recording begins inside it.
+          tl.fromTo(frame, { opacity: 0 }, { opacity: 1, duration: 0.42, ease: "power2.out" }, 0.02);
+          tl.fromTo(kicker, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.30);
+
+          // Scene 2 (1.9-3.8s) — the first callout, joined to the thread column by a drawn leader.
+          tl.fromTo(c1, { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 1.90);
+          tl.set(l1, { opacity: 1 }, 2.20);
+          tl.to(l1, { attr: { "stroke-dashoffset": 0 }, duration: 0.6, ease: "power2.out" }, 2.20);
+
+          // Scene 3 (3.8-6.1s) — the second callout; its leader is the one cyan moment.
+          tl.fromTo(c2, { opacity: 0, x: -34 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 3.80);
+          tl.set(l2, { opacity: 1 }, 4.15);
+          tl.to(l2, { attr: { "stroke-dashoffset": 0 }, duration: 0.85, ease: "power2.out" }, 4.15);
+          tl.fromTo(c2,
+            { boxShadow: "0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45)", borderColor: "rgba(233,238,246,0.10)" },
+            { boxShadow: "0 0 26px rgba(92,225,242,0.24), 0 18px 48px rgba(0,0,0,0.45)", borderColor: "rgba(92,225,242,0.38)", duration: 0.7, ease: "power2.out" },
+            4.55);
+
+          // Scene 4 (6.1-8.2s) — held read. Nothing authored moves; the footage is the motion.
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>

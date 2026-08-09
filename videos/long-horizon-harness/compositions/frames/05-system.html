@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <template>
+      <style>
+        @font-face{font-family:"Inter";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Regular.woff2") format("woff2");}
+        @font-face{font-family:"Inter";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/Inter-Bold.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:400;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Regular.woff2") format("woff2");}
+        @font-face{font-family:"JetBrains Mono";font-weight:700;font-style:normal;font-display:block;src:url("assets/fonts/JetBrainsMono-Bold.woff2") format("woff2");}
+
+        #root{
+          position:absolute; inset:0; width:1920px; height:1080px;
+          container-type:size; overflow:hidden;
+          color:#E9EEF6; font-family:"Inter", system-ui, sans-serif;
+        }
+        .sy-ground{ position:absolute; inset:0; background:#06080C; }
+        .sy-sky{
+          position:absolute; inset:0;
+          background:radial-gradient(70% 62% at 50% 44%, rgba(126,176,204,0.085) 0%, rgba(6,8,12,0) 72%);
+        }
+        .sy-kicker{
+          position:absolute; left:4.2cqw; top:4.2cqw;
+          font-family:"JetBrains Mono", monospace; font-size:28px; letter-spacing:0.16em;
+          text-transform:uppercase; color:rgba(233,238,246,0.52);
+        }
+        .sy-kicker i{ color:#5CE1F2; font-style:normal; margin-right:0.6em; }
+        .sy-edges{ position:absolute; inset:0; }
+        .sy-node{
+          position:absolute; background:#0E1219;
+          border:1px solid rgba(233,238,246,0.12); border-radius:12px;
+          box-shadow:0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45);
+          display:flex; align-items:center; justify-content:center;
+          font-family:"JetBrains Mono", monospace; letter-spacing:0.12em;
+          color:rgba(233,238,246,0.80);
+        }
+        .sy-core{
+          background:#161C26; border-color:rgba(233,238,246,0.28);
+          font-size:30px; color:#E9EEF6;
+        }
+        .sy-sat{ font-size:23px; }
+        .sy-sub{ font-size:22px; }
+        .sy-dot{
+          position:absolute; width:9px; height:9px; border-radius:50%;
+          background:rgba(233,238,246,0.48);
+        }
+      </style>
+
+      <div id="root" data-composition-id="05-system" data-start="0" data-duration="9.4" data-width="1920" data-height="1080">
+        <div id="sy-ground" class="clip sy-ground" data-start="0" data-duration="9.4" data-track-index="0">
+          <div class="sy-sky"></div>
+        </div>
+
+        <div class="sy-kicker" id="sy-kicker"><i>&#10033;</i>ONE RUNNER</div>
+
+        <svg class="sy-edges" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+          <line id="sy-l1" x1="960" y1="460" x2="440" y2="234" stroke="rgba(233,238,246,0.18)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+          <line id="sy-l2" x1="960" y1="460" x2="1470" y2="234" stroke="rgba(233,238,246,0.18)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+          <line id="sy-l3" x1="960" y1="460" x2="1560" y2="634" stroke="rgba(233,238,246,0.18)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+          <line id="sy-l4" x1="960" y1="460" x2="420" y2="678" stroke="rgba(233,238,246,0.18)" stroke-width="1.6" vector-effect="non-scaling-stroke"/>
+          <line id="sy-l5" x1="960" y1="460" x2="760" y2="738" stroke="#5CE1F2" stroke-width="2.2" vector-effect="non-scaling-stroke" opacity="0"/>
+        </svg>
+
+        <div class="sy-node sy-core" id="sy-core" style="left:790px; top:412px; width:340px; height:96px;">ADK RUNNER</div>
+        <div class="sy-node sy-sat" id="sy-n1" style="left:300px; top:196px; width:280px; height:76px;">MEMORY BANK</div>
+        <div class="sy-node sy-sat" id="sy-n2" style="left:1330px; top:196px; width:280px; height:76px;">SANDBOX</div>
+        <div class="sy-node sy-sat" id="sy-n3" style="left:1400px; top:596px; width:320px; height:76px;">SECRET MANAGER</div>
+        <div class="sy-node sy-sub" id="sy-n4" style="left:300px; top:640px; width:240px; height:76px;">SUB-AGENT</div>
+        <div class="sy-node sy-sub" id="sy-n5" style="left:640px; top:700px; width:240px; height:76px;">SUB-AGENT</div>
+
+        <div class="sy-dot" id="sy-d1" style="left:262px; top:606px;"></div>
+        <div class="sy-dot" id="sy-d2" style="left:246px; top:676px;"></div>
+        <div class="sy-dot" id="sy-d3" style="left:286px; top:744px;"></div>
+        <div class="sy-dot" id="sy-d4" style="left:906px; top:672px;"></div>
+        <div class="sy-dot" id="sy-d5" style="left:930px; top:742px;"></div>
+        <div class="sy-dot" id="sy-d6" style="left:894px; top:806px;"></div>
+      </div>
+
+      <script>
+        (function () {
+          window.__timelines = window.__timelines || {};
+          var tl = gsap.timeline({ paused: true });
+          var ID = "05-system";
+
+          var core = document.getElementById('sy-core');
+          var kicker = document.getElementById('sy-kicker');
+          var nodes = ['sy-n1', 'sy-n2', 'sy-n3', 'sy-n4', 'sy-n5'].map(function (i) { return document.getElementById(i); });
+          var lines = ['sy-l1', 'sy-l2', 'sy-l3', 'sy-l4'].map(function (i) { return document.getElementById(i); });
+          var live = document.getElementById('sy-l5');
+          var dots = ['sy-d1', 'sy-d2', 'sy-d3', 'sy-d4', 'sy-d5', 'sy-d6'].map(function (i) { return document.getElementById(i); });
+
+          gsap.set(nodes, { opacity: 0, scale: 0.88, transformOrigin: "50% 50%" });
+          gsap.set(dots, { opacity: 0, scale: 0.2, transformOrigin: "50% 50%" });
+
+          // Edges draw themselves; each is length-normalised so one dash covers the whole line.
+          var LENS = [568, 559, 625, 583];
+          lines.forEach(function (ln, i) {
+            gsap.set(ln, { attr: { "stroke-dasharray": LENS[i], "stroke-dashoffset": LENS[i] } });
+          });
+          gsap.set(live, { attr: { "stroke-dasharray": 344, "stroke-dashoffset": 344 }, opacity: 0 });
+
+          // Scene 1 (0.0-1.7s) — the core alone.
+          tl.fromTo(core,
+            { opacity: 0, scale: 0.86, filter: "blur(10px)" },
+            { opacity: 1, scale: 1, filter: "blur(0px)", duration: 0.78, ease: "power3.out" },
+            0.10);
+          tl.fromTo(kicker, { opacity: 0, x: -14 }, { opacity: 1, x: 0, duration: 0.7, ease: "power3.out" }, 0.50);
+
+          // Scenes 2-4 — one satellite per spoken cue, each with its edge drawing out to it.
+          var cues = [1.70, 3.40, 5.10];
+          for (var i = 0; i < 3; i++) {
+            tl.to(lines[i], { attr: { "stroke-dashoffset": 0 }, duration: 0.60, ease: "power2.out" }, cues[i]);
+            tl.fromTo(nodes[i],
+              { opacity: 0, scale: 0.88 },
+              { opacity: 1, scale: 1, duration: 0.62, ease: "power3.out" },
+              cues[i] + 0.30);
+          }
+
+          // Scene 5 (6.8-8.4s) — the two sub-agents, each ringed by its own context window,
+          // and the one cyan moment: the edge to the nearer sub-agent lights up.
+          tl.to(lines[3], { attr: { "stroke-dashoffset": 0 }, duration: 0.55, ease: "power2.out" }, 6.80);
+          tl.fromTo(nodes[3], { opacity: 0, scale: 0.88 }, { opacity: 1, scale: 1, duration: 0.58, ease: "power3.out" }, 7.05);
+          tl.fromTo(nodes[4], { opacity: 0, scale: 0.88 }, { opacity: 1, scale: 1, duration: 0.58, ease: "power3.out" }, 7.28);
+          tl.fromTo(dots,
+            { opacity: 0, scale: 0.2 },
+            { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out", stagger: 0.06 },
+            7.35);
+          tl.set(live, { opacity: 1 }, 7.42);
+          tl.to(live, { attr: { "stroke-dashoffset": 0 }, duration: 0.55, ease: "power2.out" }, 7.42);
+          tl.fromTo(nodes[4],
+            { boxShadow: "0 1px 2px rgba(0,0,0,0.70), 0 18px 48px rgba(0,0,0,0.45)", borderColor: "rgba(233,238,246,0.12)" },
+            { boxShadow: "0 0 24px rgba(92,225,242,0.34), 0 18px 48px rgba(0,0,0,0.45)", borderColor: "rgba(92,225,242,0.45)", duration: 0.55, ease: "power2.out" },
+            7.62);
+
+          // Scene 6 (8.4-8.9s) — hold; bounded jitter on the core only.
+          var jitter = { p: 0 };
+          tl.to(jitter, {
+            p: 1, duration: 0.5, ease: "none",
+            onUpdate: function () { gsap.set(core, { y: Math.sin(jitter.p * Math.PI * 2) * 1.1 }); }
+          }, 8.40);
+
+          window.__timelines[ID] = tl;
+        })();
+      </script>
+    </template>
+  </body>
+</html>
