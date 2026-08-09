@@ -24,15 +24,13 @@ import { join } from "node:path";
 const ROOT = new URL("..", import.meta.url).pathname;
 
 const FRAMES = [
-  { id: "01-text-cant-be-tapped", p: "f01c", dur: 8, ground: ".f01tct-ground", fig: "Fig. 01 — Agent reply, plain text" },
-  { id: "02-describe-the-interface", p: "f02c", dur: 8, ground: "#f02-ground", fig: "Fig. 02 — A2UI Composer" },
-  { id: "03-prompt-to-ui-live", p: "f03c", dur: 14, ground: "#p3-ground", fig: "Fig. 03 — Surface: flight-status" },
-  { id: "04-the-workbench", p: "f04c", dur: 10, ground: "#wb4-ground", fig: "Fig. 04 — Composer workbench" },
-  { id: "05-one-payload-every-renderer", p: "f05c", dur: 10, ground: ".f05-ground", fig: "Fig. 05 — Basic catalog, three renderers" },
-  { id: "06-open-the-composer", p: "f06c", dur: 10, ground: ".otc-ground", fig: "Fig. 06 — a2ui.org/composer" },
+  { id: "01-text-cant-be-tapped", p: "f01c", dur: 8, ground: ".f01tct-ground" },
+  { id: "02-describe-the-interface", p: "f02c", dur: 8, ground: "#f02-ground" },
+  { id: "03-prompt-to-ui-live", p: "f03c", dur: 14, ground: "#p3-ground" },
+  { id: "04-the-workbench", p: "f04c", dur: 10, ground: "#wb4-ground" },
+  { id: "05-one-payload-every-renderer", p: "f05c", dur: 10, ground: ".f05-ground" },
+  { id: "06-open-the-composer", p: "f06c", dur: 10, ground: ".otc-ground" },
 ];
-
-const RAIL = "A2UI · a streaming protocol for agent-driven user interfaces";
 
 const css = (f) => `
     /* ── injected by scripts/chassis.mjs — do not hand-edit ───────────────── */
@@ -48,7 +46,7 @@ const css = (f) => `
     }
     ${f.ground} { box-shadow: inset 0 0 300px 90px rgba(0,0,0,0.55); }
 
-    /* chassis: corner ticks + top rail + the vertical index rail */
+    /* chassis: corner ticks + the top rail */
     #${f.p}-chassis { position: absolute; inset: 0; pointer-events: none; }
     #${f.p}-chassis .tick { position: absolute; width: 30px; height: 30px; }
     #${f.p}-chassis .tick::before,
@@ -71,19 +69,9 @@ const css = (f) => `
 
     #${f.p}-toprail {
       position: absolute; left: 118px; right: 118px; top: 62px; height: 20px;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: flex-end;
       font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 500;
       letter-spacing: 0.16em; line-height: 20px; color: #828A99;
-    }
-    #${f.p}-toprail .dot {
-      display: inline-block; width: 5px; height: 5px; background: #34E2C0;
-      margin-right: 14px; vertical-align: 3px;
-    }
-    #${f.p}-vrail {
-      position: absolute; left: 34px; top: 50%; transform: translateY(-50%) rotate(180deg);
-      writing-mode: vertical-rl; text-orientation: mixed;
-      font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 400;
-      letter-spacing: 0.30em; color: #828A99; white-space: nowrap;
     }
     /* ── end chassis ─────────────────────────────────────────────────────── */
 `;
@@ -92,8 +80,7 @@ const markup = (f) => `
     <!-- injected by scripts/chassis.mjs — the film's editorial chassis -->
     <div id="${f.p}-chassis" class="clip" data-start="0" data-duration="${f.dur}" data-track-index="3" data-layout-allow-overlap>
       <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
-      <div id="${f.p}-toprail"><span><i class="dot"></i>${f.fig}</span><span>A2UI.ORG/COMPOSER</span></div>
-      <div id="${f.p}-vrail">${RAIL}</div>
+      <div id="${f.p}-toprail"><span>A2UI.ORG/COMPOSER</span></div>
     </div>
 `;
 
@@ -108,15 +95,14 @@ for (const f of FRAMES) {
 
   // idempotence — strip any previous injection
   if (s.includes(START)) s = s.slice(0, s.indexOf(START)) + s.slice(s.indexOf(END) + END.length);
-  if (s.includes(MSTART)) {
-    const a = s.indexOf(MSTART);
-    // the vrail line closes itself, so step PAST that one to reach the
-    // chassis wrapper's own </div> — stopping at the first one strands an
-    // orphan close, which silently ejects the re-injected block from #root.
-    const vrailClose = s.indexOf("</div>", s.indexOf(`id="${f.p}-vrail"`)) + "</div>".length;
-    const b = s.indexOf("</div>", vrailClose) + "</div>".length;
-    s = s.slice(0, a) + s.slice(b);
-  }
+  // Match the whole injected block by its wrapper's 4-space-indented close.
+  // Counting </div>s is what broke this twice: any change to how many elements
+  // the block contains strands an orphan close, which silently ejects the
+  // re-injected chassis from #root and renders nothing.
+  s = s.replace(
+    new RegExp(`\\n    <!-- injected by scripts/chassis\\.mjs[\\s\\S]*?<div id="${f.p}-chassis"[\\s\\S]*?\\n    </div>\\n`),
+    "\n",
+  );
 
   // CSS → before the first </style>
   s = s.replace(/[ \t]+<\/style>/, "</style>").replace(/[ \t]+<\/div>(\s*<script)/, "</div>$1");
@@ -131,6 +117,12 @@ for (const f of FRAMES) {
   const close = s.lastIndexOf("</div>", scriptAt);
   // trim trailing whitespace on the insertion side so repeat runs are byte-stable
   s = s.slice(0, close).replace(/[ \t\n]*$/, "") + markup(f) + "  " + s.slice(close);
+
+  // guard: the chassis must land INSIDE #root, or it renders nothing at all
+  const region = s.slice(s.indexOf(`data-composition-id="${f.id}"`), s.indexOf("<script", rootAt));
+  const opens = (region.match(/<div\b/g) || []).length + 1; // +1 for the root tag itself
+  const closes = (region.match(/<\/div>/g) || []).length;
+  if (opens !== closes) throw new Error(`${f.id}: unbalanced root (${opens} open / ${closes} close) — chassis would fall outside #root`);
 
   writeFileSync(path, s);
   n++;

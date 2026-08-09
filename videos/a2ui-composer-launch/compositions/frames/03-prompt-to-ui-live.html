@@ -150,7 +150,7 @@
     }
     #p3-ground { box-shadow: inset 0 0 300px 90px rgba(0,0,0,0.55); }
 
-    /* chassis: corner ticks + top rail + the vertical index rail */
+    /* chassis: corner ticks + the top rail */
     #f03c-chassis { position: absolute; inset: 0; pointer-events: none; }
     #f03c-chassis .tick { position: absolute; width: 30px; height: 30px; }
     #f03c-chassis .tick::before,
@@ -173,19 +173,9 @@
 
     #f03c-toprail {
       position: absolute; left: 118px; right: 118px; top: 62px; height: 20px;
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; align-items: center; justify-content: flex-end;
       font-family: 'JetBrains Mono', monospace; font-size: 17px; font-weight: 500;
       letter-spacing: 0.16em; line-height: 20px; color: #828A99;
-    }
-    #f03c-toprail .dot {
-      display: inline-block; width: 5px; height: 5px; background: #34E2C0;
-      margin-right: 14px; vertical-align: 3px;
-    }
-    #f03c-vrail {
-      position: absolute; left: 34px; top: 50%; transform: translateY(-50%) rotate(180deg);
-      writing-mode: vertical-rl; text-orientation: mixed;
-      font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 400;
-      letter-spacing: 0.30em; color: #828A99; white-space: nowrap;
     }
     /* ── end chassis ─────────────────────────────────────────────────────── */
 </style>
@@ -194,7 +184,7 @@
 
   <div class="clip" id="p3-ground" data-start="0" data-duration="14.6" data-track-index="0">
     <div class="p3-grid"></div>
-    <div class="p3-status" data-layout-allow-overlap><span>A2UI · AGENT-DRIVEN INTERFACES</span><span>03 / 06</span></div>
+    <div class="p3-status" data-layout-allow-overlap><span>A2UI · AGENT-DRIVEN INTERFACES</span></div>
   </div>
 
   <div class="clip" id="p3-stage" data-start="0" data-duration="14.6" data-track-index="1">
@@ -277,8 +267,7 @@
     <!-- injected by scripts/chassis.mjs — the film's editorial chassis -->
     <div id="f03c-chassis" class="clip" data-start="0" data-duration="14.6" data-track-index="3" data-layout-allow-overlap>
       <i class="tick tl"></i><i class="tick tr"></i><i class="tick bl"></i><i class="tick br"></i>
-      <div id="f03c-toprail"><span><i class="dot"></i>Fig. 03 — Surface: flight-status</span><span>A2UI.ORG/COMPOSER</span></div>
-      <div id="f03c-vrail">A2UI · a streaming protocol for agent-driven user interfaces</div>
+      <div id="f03c-toprail"><span>A2UI.ORG/COMPOSER</span></div>
     </div>
   </div>
 
