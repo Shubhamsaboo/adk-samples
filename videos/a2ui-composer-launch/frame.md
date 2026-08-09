@@ -20,8 +20,8 @@ colors:
   surface-elev: "#141824"  # a panel header, title bar, tab strip — the second half-step
   surface-hi: "#1B2130"    # a hovered/active row, a selected tab. The top of the ladder.
   ink: "#EDF1F8"           # the voice. Primary type.
-  ink-mute: "#8A93A6"      # secondary type, panel labels, inactive tabs
-  ink-faint: "#4A5364"      # tertiary type, punctuation, line numbers, disabled chrome
+  ink-mute: "#A3ABBB"      # secondary type, panel labels, inactive tabs
+  ink-faint: "#828A99"      # tertiary type, punctuation, line numbers, disabled chrome
   stream: "#5B8CFF"        # ACCENT 1 — signal in flight: JSON keys, the caret, the wire
   live: "#34E2C0"          # ACCENT 2 (the voltage) — anything that has become real
   gemini: "#A78BFA"        # RESERVED: the assistant panel only. Never used elsewhere.
@@ -176,9 +176,12 @@ This is a dark film, so glow is the easiest mistake and the most expensive one.
 - **No gradients on content.** The only gradient permitted anywhere is the radial mask
   that fades the `grid-field` toward the frame edge, and the vertical scrim under a panel
   header.
-- Contrast floor: body and label type against its own surface must clear **4.5:1**
-  (`ink` on `surface` = 15.4:1, `ink-mute` on `surface` = 6.1:1 — both pass;
-  `ink-faint` is for punctuation and line numbers only, never for words that must be read).
+- Contrast floor: **every** step of the ink ladder clears **4.5:1** against every step of the
+  surface ladder, including the worst pairing (`ink-faint` on `surface-hi` = 4.63:1). The muted
+  steps were lifted from `#4A5364` / `#8A93A6` after the WCAG gate caught line numbers, JSON
+  punctuation and the status strip sitting at 2.3–2.6:1 — recessive is a hierarchy decision, not a
+  licence to be unreadable at the size people actually watch this. `ink-faint` still belongs to
+  punctuation, line numbers and chrome; it is simply legible now.
 
 ## Frame scale (1920×1080)
 

@@ -72,7 +72,7 @@ drifting independently). Lazy breathing and back-half camera drift are banned ou
 - duration: 8s
 - transition_in: cut
 - src: compositions/frames/01-text-cant-be-tapped.html
-- status: outline
+- status: animated
 - type: hook
 - persuasion: Pain agitation
 - beat: friction → recognition
@@ -112,7 +112,7 @@ Scene 4 (6.4–8.0s): held read. Everything still; only the caret blinks. No dri
 - duration: 8s
 - transition_in: crossfade
 - src: compositions/frames/02-describe-the-interface.html
-- status: outline
+- status: animated
 - type: product_intro
 - persuasion: Friction reduction
 - beat: curiosity → clarity
@@ -150,7 +150,7 @@ Frame 3's density land.
 - duration: 14s
 - transition_in: zoom-through
 - src: compositions/frames/03-prompt-to-ui-live.html
-- status: outline
+- status: animated
 - type: feature_showcase
 - persuasion: Show-don't-tell proof
 - beat: intrigue → awe
@@ -204,9 +204,9 @@ Scene 6 (11.4–14.0s): held read. The stage is still; only the editor caret bli
 
 - scene: one continuous pull-back reveals the whole Composer around the editor we were reading
 - duration: 10s
-- transition_in: crossfade
+- transition_in: blur-crossfade
 - src: compositions/frames/04-the-workbench.html
-- status: outline
+- status: animated
 - type: feature_showcase
 - persuasion: Value stacking
 - beat: clarity → control
@@ -250,7 +250,7 @@ Scene 5 (8.4–10.0s): held read. Locked frame, nothing moving but the caret.
 - duration: 10s
 - transition_in: push-slide LEFT
 - src: compositions/frames/05-one-payload-every-renderer.html
-- status: outline
+- status: animated
 - type: benefit_highlight
 - persuasion: Negative contrast
 - beat: skepticism → trust
@@ -294,7 +294,7 @@ carrying the frame's single `live` voltage. Held read; still.
 - duration: 10s
 - transition_in: zoom-through
 - src: compositions/frames/06-open-the-composer.html
-- status: outline
+- status: animated
 - type: cta
 - persuasion: Friction reduction
 - beat: confidence → urgency-to-act
