@@ -1,0 +1,4 @@
+# Transient render scratch — hyperframes writes per-run work dirs here while
+# encoding, then cleans up. The finished MP4 (renders/video.mp4) is tracked.
+renders/work-*/
+node_modules/
