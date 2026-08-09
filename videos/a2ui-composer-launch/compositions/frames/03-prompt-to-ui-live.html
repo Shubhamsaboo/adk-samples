@@ -191,7 +191,7 @@
       <!-- editor -->
       <div class="p3-panel" id="p3-editor">
         <div class="p3-head"><div class="p3-head-label">A2UI JSON</div></div>
-        <div id="p3-code"><div id="p3-scroll"><div id="p3-ecaret"></div></div></div>
+        <div id="p3-code"><div id="p3-scroll"><div id="p3-ecaret"><div id="p3-ecaret-b"></div></div></div></div>
       </div>
 
       <!-- debug tab strip -->
@@ -305,6 +305,7 @@
 
   var scroll = q("#p3-scroll");
   var caretE = q("#p3-ecaret");
+  var caretB = q("#p3-ecaret-b");
   var rows = [];
   for (var i = 0; i < LINES.length; i++) {
     var row = document.createElement("div");
@@ -439,14 +440,16 @@
   }, 10.28);
 
   /* --- Scene 6 (11.4-14.0) : held read. Only the editor caret blinks (even frames). --- */
-  var blink = { t: 8.85 };
-  tl.fromTo(blink, { t: 8.85 }, {
-    t: 14.0, duration: 5.15, ease: "none",
+  var blink = { t: 3.26 };
+  tl.fromTo(blink, { t: 3.26 }, {
+    t: 14.0, duration: 10.74, ease: "none",
     onUpdate: function () {
+      /* solid while the payload is still streaming; 1.6Hz blink once it lands */
+      if (blink.t < 8.85) { caretB.style.opacity = "1"; return; }
       var f = Math.round(blink.t * 30) / 30;
-      caretE.style.opacity = (Math.floor(f / 0.3125) % 2 === 0) ? "1" : "0";
+      caretB.style.opacity = (Math.floor(f / 0.3125) % 2 === 0) ? "1" : "0";
     }
-  }, 8.85);
+  }, 3.26);
 })();
 </script>
 </template>
