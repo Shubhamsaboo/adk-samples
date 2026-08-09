@@ -1,0 +1,24 @@
+A2UI Composer
+
+Try building A2UI widgets interactively with the A2UI Composer.
+
+The Composer workspace is split into several interactive panels:
+- Gemini Assistant: a chat interface powered by Gemini. Use natural language prompts to ask Gemini to generate new layouts, refine the existing JSON, or modify visual attributes. You can upload an attachment (a mock, for example) or include a screenshot of the current A2UI interface.
+- Rendered A2UI Preview: displays the live visual preview of the active component.
+- A2UI JSON Editor: displays the raw JSON payload defining the UI structure and component hierarchy. Edit it directly to instantly update the rendered preview. Tooltips on hover show the description of each A2UI element.
+- Debug & Inspection Tabs: Data Model (inspect and modify runtime state bound to components; changes propagate to the preview and user input updates the model), Events (logs user-interaction events dispatched by rendered components), Errors, and Raw Messages (communication between the Composer and the renderer, and interactions with Gemini).
+
+Components Gallery: browse every component in the current A2UI catalog. Each has a rendered example plus the A2UI JSON that produces it, and a property table.
+
+Settings: switch the renderer application — Angular Basic Catalog, Lit Basic Catalog, React Basic Catalog, or a custom renderer URL. Also where the Gemini API key is entered; the Composer encrypts it and stores it locally in the browser via the Web Crypto API.
+
+A2UI is a protocol for agent-driven interfaces. It enables AI agents to generate rich, interactive user interfaces that render natively across web, mobile, and desktop — without executing arbitrary code. It solves one problem: how can AI agents safely send rich UIs across trust boundaries? Instead of text-only responses or risky code execution, A2UI lets agents send declarative component descriptions that clients render using their own native widgets.
+
+Secure by Design — declarative data format, not executable code. Agents can only use pre-approved components from your catalog; no UI injection attacks.
+LLM-Friendly — flat, streaming JSON structure designed for easy generation. LLMs can build UIs incrementally without perfect JSON in one shot.
+Framework-Agnostic — one agent response works everywhere. Render the same UI on Angular, Flutter, React, or native mobile with your own styled components.
+Progressive Rendering — stream UI updates as they are generated. Users see the interface building in real time instead of waiting for complete responses.
+
+A2UI is Apache 2.0 licensed, created by Google with contributions from CopilotKit and the open source community. Current spec v0.9.1; v1.0 is a release candidate.
+
+No install required. Open the composer: a2ui.org/composer

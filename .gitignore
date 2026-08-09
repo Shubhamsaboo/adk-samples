@@ -209,3 +209,8 @@ bin/
 
 # Local VSCode settings
 .vscode/
+
+# HyperFrames AI-agent skills, vendored by `npx skills add heygen-com/hyperframes`.
+# Reproducible from skills-lock.json — see videos/a2ui-composer-launch/README.md.
+.agents/
+.claude/skills/
